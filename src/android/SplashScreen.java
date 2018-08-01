@@ -57,6 +57,7 @@ public class SplashScreen extends CordovaPlugin {
     private static Dialog splashDialog;
     private static ProgressDialog spinnerDialog;
     private static boolean firstShow = true;
+	private static boolean dontShow = false;
     private static boolean lastHideAfterDelay; // https://issues.apache.org/jira/browse/CB-9094
 
     /**
@@ -93,6 +94,9 @@ public class SplashScreen extends CordovaPlugin {
     @Override
     protected void pluginInitialize() {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
+            return;
+        }
+        if (!preferences.getBoolean("ShowSplashScreen", true)) {
             return;
         }
         // Make WebView invisible while loading URL
@@ -143,6 +147,9 @@ public class SplashScreen extends CordovaPlugin {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
             return;
         }
+        if (!preferences.getBoolean("ShowSplashScreen", true)) {
+            return;
+        }
         // hide the splash screen to avoid leaking a window
         this.removeSplashScreen(true);
     }
@@ -150,6 +157,9 @@ public class SplashScreen extends CordovaPlugin {
     @Override
     public void onDestroy() {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
+            return;
+        }
+        if (!preferences.getBoolean("ShowSplashScreen", true)) {
             return;
         }
         // hide the splash screen to avoid leaking a window
@@ -184,6 +194,9 @@ public class SplashScreen extends CordovaPlugin {
     public Object onMessage(String id, Object data) {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
             return null;
+        }
+        if (!preferences.getBoolean("ShowSplashScreen", true)) {
+            return;
         }
         if ("splashscreen".equals(id)) {
             if ("hide".equals(data.toString())) {
