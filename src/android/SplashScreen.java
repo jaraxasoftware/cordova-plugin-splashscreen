@@ -196,7 +196,7 @@ public class SplashScreen extends CordovaPlugin {
             return null;
         }
         if (!preferences.getBoolean("ShowSplashScreen", true)) {
-            return;
+            return null;
         }
         if ("splashscreen".equals(id)) {
             if ("hide".equals(data.toString())) {
